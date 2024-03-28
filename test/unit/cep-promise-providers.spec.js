@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-import chai from 'chai';
-import chaiSubset from 'chai-subset';
-import nock from 'nock';
-import path from 'path';
+import chai from 'chai'
+import chaiSubset from 'chai-subset'
+import nock from 'nock'
+import path from 'path'
 
-import cep from '../../src/cep-promise.js';
-import CepPromiseError from '../../src/errors/cep-promise.js';
-import { getAvailableServices } from '../../src/services/index.js';
+import cep from '../../src/cep-promise.js'
+import CepPromiseError from '../../src/errors/cep-promise.js'
+import { getAvailableServices } from '../../src/services/index.js'
 
-chai.use(chaiSubset);
+chai.use(chaiSubset)
 
-let expect = chai.expect;
+let expect = chai.expect
 
 describe('when invoked with providers parameter', () => {
   before(() => {
-    nock.disableNetConnect();
-  });
+    nock.disableNetConnect()
+  })
 
   describe('and the providers param is a string', () => {
     it('should reject with 'validation_error'', () => {
@@ -33,10 +33,10 @@ describe('when invoked with providers parameter', () => {
                 message: 'O parâmetro providers deve ser uma lista.',
               },
             ],
-          });
-      });
-    });
-  });
+          })
+      })
+    })
+  })
 
   describe('and the providers param is a integer', () => {
     it('should reject with 'validation_error'', () => {
@@ -53,10 +53,10 @@ describe('when invoked with providers parameter', () => {
                 message: 'O parâmetro providers deve ser uma lista.',
               },
             ],
-          });
-      });
-    });
-  });
+          })
+      })
+    })
+  })
 
   describe('and the providers param is a object', () => {
     it('should reject with 'validation_error'', () => {
@@ -73,10 +73,10 @@ describe('when invoked with providers parameter', () => {
                 message: 'O parâmetro providers deve ser uma lista.',
               },
             ],
-          });
-      });
-    });
-  });
+          })
+      })
+    })
+  })
 
   describe('and the providers param is a function', () => {
     it('should reject with 'validation_error'', () => {
@@ -93,14 +93,14 @@ describe('when invoked with providers parameter', () => {
                 message: 'O parâmetro providers deve ser uma lista.',
               },
             ],
-          });
-      });
-    });
-  });
+          })
+      })
+    })
+  })
 
   describe('and the providers param is a invalid array', () => {
     it('should reject with 'validation_error'', () => {
-      const availableProviders = Object.keys(getAvailableServices());
+      const availableProviders = Object.keys(getAvailableServices())
 
       return cep('05010000', { providers: [123, 'viacep'] }).catch((error) => {
         return expect(error)
@@ -116,10 +116,10 @@ describe('when invoked with providers parameter', () => {
                 service: 'providers_validation',
               },
             ],
-          });
-      });
-    });
-  });
+          })
+      })
+    })
+  })
 
   describe('and the providers param is ['viacep']', () => {
     it('should call only viacep service', () => {
@@ -128,34 +128,34 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['viacep'] }).then((address) => {
         expect(address).to.deep.equal({
@@ -165,16 +165,16 @@ describe('when invoked with providers parameter', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: 'viacep',
-        });
+        })
 
-        expect(viaCepMock.isDone()).to.be.equal(true);
-        expect(correiosMock.isDone()).to.be.equal(false);
-        expect(correiosAltMock.isDone()).to.be.equal(false);
-        expect(wideNetMock.isDone()).to.be.equal(false);
-        expect(postmonMock.isDone()).to.be.equal(false);
-      });
-    });
-  });
+        expect(viaCepMock.isDone()).to.be.equal(true)
+        expect(correiosMock.isDone()).to.be.equal(false)
+        expect(correiosAltMock.isDone()).to.be.equal(false)
+        expect(wideNetMock.isDone()).to.be.equal(false)
+        expect(postmonMock.isDone()).to.be.equal(false)
+      })
+    })
+  })
 
   describe('and the providers param is ['postmon']', () => {
     it('should call only postmon service', () => {
@@ -183,34 +183,34 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/cep/carrega-cep.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['postmon'] }).then((address) => {
         expect(address).to.deep.equal({
@@ -220,16 +220,16 @@ describe('when invoked with providers parameter', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: 'postmon',
-        });
+        })
 
-        expect(viaCepMock.isDone()).to.be.equal(false);
-        expect(correiosMock.isDone()).to.be.equal(false);
-        expect(correiosAltMock.isDone()).to.be.equal(false);
-        expect(wideNetMock.isDone()).to.be.equal(false);
-        expect(postmonMock.isDone()).to.be.equal(true);
-      });
-    });
-  });
+        expect(viaCepMock.isDone()).to.be.equal(false)
+        expect(correiosMock.isDone()).to.be.equal(false)
+        expect(correiosAltMock.isDone()).to.be.equal(false)
+        expect(wideNetMock.isDone()).to.be.equal(false)
+        expect(postmonMock.isDone()).to.be.equal(true)
+      })
+    })
+  })
 
   describe('and the providers param is ['widenet']', () => {
     it('should call only widenet service', () => {
@@ -238,34 +238,34 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['widenet'] }).then((address) => {
         expect(address).to.deep.equal({
@@ -275,16 +275,16 @@ describe('when invoked with providers parameter', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: 'widenet',
-        });
+        })
 
-        expect(wideNetMock.isDone()).to.be.equal(true);
-        expect(viaCepMock.isDone()).to.be.equal(false);
-        expect(correiosMock.isDone()).to.be.equal(false);
-        expect(correiosAltMock.isDone()).to.be.equal(false);
-        expect(postmonMock.isDone()).to.be.equal(false);
-      });
-    });
-  });
+        expect(wideNetMock.isDone()).to.be.equal(true)
+        expect(viaCepMock.isDone()).to.be.equal(false)
+        expect(correiosMock.isDone()).to.be.equal(false)
+        expect(correiosAltMock.isDone()).to.be.equal(false)
+        expect(postmonMock.isDone()).to.be.equal(false)
+      })
+    })
+  })
 
   describe('and the providers param is ['correios']', () => {
     it('should call only correios service', () => {
@@ -293,34 +293,34 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['correios'] }).then((address) => {
         expect(address).to.deep.equal({
@@ -330,16 +330,16 @@ describe('when invoked with providers parameter', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: 'correios',
-        });
+        })
 
-        expect(correiosMock.isDone()).to.be.equal(true);
-        expect(correiosAltMock.isDone()).to.be.equal(false);
-        expect(viaCepMock.isDone()).to.be.equal(false);
-        expect(wideNetMock.isDone()).to.be.equal(false);
-        expect(postmonMock.isDone()).to.be.equal(false);
-      });
-    });
-  });
+        expect(correiosMock.isDone()).to.be.equal(true)
+        expect(correiosAltMock.isDone()).to.be.equal(false)
+        expect(viaCepMock.isDone()).to.be.equal(false)
+        expect(wideNetMock.isDone()).to.be.equal(false)
+        expect(postmonMock.isDone()).to.be.equal(false)
+      })
+    })
+  })
 
   describe('and the providers param is ['correios-alt']', () => {
     it('should call only correios alt service', () => {
@@ -348,34 +348,34 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cep.widenet.host')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['correios-alt'] }).then(
         (address) => {
@@ -386,17 +386,17 @@ describe('when invoked with providers parameter', () => {
             neighborhood: 'Perdizes',
             street: 'Rua Caiubi',
             service: 'correios-alt',
-          });
+          })
 
-          expect(correiosMock.isDone()).to.be.equal(false);
-          expect(correiosAltMock.isDone()).to.be.equal(true);
-          expect(viaCepMock.isDone()).to.be.equal(false);
-          expect(wideNetMock.isDone()).to.be.equal(false);
-          expect(postmonMock.isDone()).to.be.equal(false);
+          expect(correiosMock.isDone()).to.be.equal(false)
+          expect(correiosAltMock.isDone()).to.be.equal(true)
+          expect(viaCepMock.isDone()).to.be.equal(false)
+          expect(wideNetMock.isDone()).to.be.equal(false)
+          expect(postmonMock.isDone()).to.be.equal(false)
         }
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('and the providers param is ['brasilapi']', () => {
     it('should call only brasilapi service', () => {
@@ -405,42 +405,42 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       const brasilAPIMock = nock('https://brasilapi.com.br/')
         .get('/api/cep/v1/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/brasilapi-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['brasilapi'] }).then((address) => {
         expect(address).to.deep.equal({
@@ -450,17 +450,17 @@ describe('when invoked with providers parameter', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: 'brasilapi',
-        });
+        })
 
-        expect(correiosMock.isDone()).to.be.equal(false);
-        expect(correiosAltMock.isDone()).to.be.equal(false);
-        expect(viaCepMock.isDone()).to.be.equal(false);
-        expect(wideNetMock.isDone()).to.be.equal(false);
-        expect(postmonMock.isDone()).to.be.equal(false);
-        expect(brasilAPIMock.isDone()).to.be.equal(true);
-      });
-    });
-  });
+        expect(correiosMock.isDone()).to.be.equal(false)
+        expect(correiosAltMock.isDone()).to.be.equal(false)
+        expect(viaCepMock.isDone()).to.be.equal(false)
+        expect(wideNetMock.isDone()).to.be.equal(false)
+        expect(postmonMock.isDone()).to.be.equal(false)
+        expect(brasilAPIMock.isDone()).to.be.equal(true)
+      })
+    })
+  })
 
   describe('and the providers param is ['correios, viacep']', () => {
     it('should call only correios and viacep services', () => {
@@ -469,35 +469,35 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: ['correios', 'viacep'] }).then(
         (address) => {
@@ -508,17 +508,17 @@ describe('when invoked with providers parameter', () => {
             neighborhood: 'Perdizes',
             street: 'Rua Caiubi',
             service: address.service,
-          });
+          })
 
-          expect(viaCepMock.isDone()).to.be.equal(true);
-          expect(correiosMock.isDone()).to.be.equal(true);
-          expect(correiosAltMock.isDone()).to.be.equal(false);
-          expect(wideNetMock.isDone()).to.be.equal(false);
-          expect(postmonMock.isDone()).to.be.equal(false);
+          expect(viaCepMock.isDone()).to.be.equal(true)
+          expect(correiosMock.isDone()).to.be.equal(true)
+          expect(correiosAltMock.isDone()).to.be.equal(false)
+          expect(wideNetMock.isDone()).to.be.equal(false)
+          expect(postmonMock.isDone()).to.be.equal(false)
         }
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('and the providers param is []', () => {
     it('should call all services', () => {
@@ -527,35 +527,35 @@ describe('when invoked with providers parameter', () => {
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/response-cep-05010000-found.xml')
-        );
+        )
 
       const correiosAltMock = nock('https://buscacepinter.correios.com.br')
         .post('/app/endereco/carrega-cep-endereco.php')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/correios-alt-cep-05010000-found.json')
-        );
+        )
 
       const postmonMock = nock('https://api.postmon.com.br')
         .get('/v1/cep/05010000')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/postmon-cep-05010000-found.json')
-        );
+        )
 
       const viaCepMock = nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/viacep-cep-05010000-found.json')
-        );
+        )
 
       const wideNetMock = nock('https://cdn.apicep.com')
         .get('/file/apicep/05010-000.json')
         .replyWithFile(
           200,
           path.join(__dirname, '/fixtures/widenet-cep-05010000-found.json')
-        );
+        )
 
       return cep('05010000', { providers: [] }).then((address) => {
         expect(address).to.deep.equal({
@@ -565,18 +565,18 @@ describe('when invoked with providers parameter', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: address.service,
-        });
+        })
 
-        expect(viaCepMock.isDone()).to.be.equal(true);
-        expect(correiosMock.isDone()).to.be.equal(true);
-        expect(correiosAltMock.isDone()).to.be.equal(true);
-        expect(wideNetMock.isDone()).to.be.equal(true);
-        expect(postmonMock.isDone()).to.be.equal(true);
-      });
-    });
-  });
+        expect(viaCepMock.isDone()).to.be.equal(true)
+        expect(correiosMock.isDone()).to.be.equal(true)
+        expect(correiosAltMock.isDone()).to.be.equal(true)
+        expect(wideNetMock.isDone()).to.be.equal(true)
+        expect(postmonMock.isDone()).to.be.equal(true)
+      })
+    })
+  })
 
   afterEach(() => {
-    nock.cleanAll();
-  });
-});
+    nock.cleanAll()
+  })
+})

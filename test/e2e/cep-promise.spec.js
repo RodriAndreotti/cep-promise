@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 
-import chai from 'chai';
-import chaiAsPromised from 'chai-as-promised';
-import chaiSubset from 'chai-subset';
-import nock from 'nock';
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+import chaiSubset from 'chai-subset'
+import nock from 'nock'
 
-import cep from '../../src/cep-promise.js';
-import CepPromiseError from '../../src/errors/cep-promise.js';
+import cep from '../../src/cep-promise.js'
+import CepPromiseError from '../../src/errors/cep-promise.js'
 
-chai.use(chaiAsPromised);
-chai.use(chaiSubset);
+chai.use(chaiAsPromised)
+chai.use(chaiSubset)
 
-let expect = chai.expect;
+let expect = chai.expect
 
 describe('[e2e] cep-promise', () => {
   before(() => {
-    nock.enableNetConnect();
-  });
+    nock.enableNetConnect()
+  })
 
   describe('when invoked with a valid '05010000' string', () => {
     it('should fulfill with correct address', () =>
@@ -28,13 +28,13 @@ describe('[e2e] cep-promise', () => {
           neighborhood: 'Perdizes',
           street: 'Rua Caiubi',
           service: address.service,
-        });
-      }));
-  });
+        })
+      }))
+  })
 
   describe('when invoked with a valid 05010000 number', () => {
     it('should fulfill with correct address', async () => {
-      const address = await cep(5010000);
+      const address = await cep(5010000)
 
       expect(address).to.deep.equal({
         cep: '05010000',
@@ -43,9 +43,9 @@ describe('[e2e] cep-promise', () => {
         neighborhood: 'Perdizes',
         street: 'Rua Caiubi',
         service: address.service,
-      });
-    });
-  });
+      })
+    })
+  })
 
   describe('when invoked with an inexistent '99999999' CEP', () => {
     it('should reject with 'service_error'', () => {
@@ -82,10 +82,10 @@ describe('[e2e] cep-promise', () => {
                 service: 'brasilapi',
               },
             ],
-          });
-      });
-    });
-  });
+          })
+      })
+    })
+  })
 
   describe('when invoked with an invalid '123456789' CEP', () => {
     it('should reject with 'validation_error'', () => {
@@ -102,8 +102,8 @@ describe('[e2e] cep-promise', () => {
                 message: 'CEP informado possui mais do que 8 caracteres.',
               },
             ],
-          });
-      });
-    });
-  });
-});
+          })
+      })
+    })
+  })
+})
