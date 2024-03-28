@@ -75,7 +75,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when invoked without arguments', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep().catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -96,7 +96,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when invoked with an Array', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep([1, 2, 3]).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -117,7 +117,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when invoked with an Object', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep({ nintendo: true, ps: false, xbox: false }).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -138,7 +138,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when invoked with an Function', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep(function zelda() {
         return 'link'
       }).catch((error) => {
@@ -160,7 +160,7 @@ describe('[unit] cep-promise for node', () => {
     })
   })
 
-  describe('when invoked with a valid '05010000' String', () => {
+  describe('when invoked with a valid "05010000" String', () => {
     it('should fulfill with correct address', () => {
       nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -617,8 +617,8 @@ describe('[unit] cep-promise for node', () => {
     })
   })
 
-  describe('when invoked with an inexistent '99999999' CEP', () => {
-    it('should reject with 'service_error'', () => {
+  describe('when invoked with an inexistent "99999999" CEP', () => {
+    it('should reject with "service_error"', () => {
       nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
         .replyWithFile(
@@ -695,8 +695,8 @@ describe('[unit] cep-promise for node', () => {
     })
   })
 
-  describe('when invoked with an invalid '123456789' CEP', () => {
-    it('should reject with 'validation_error'', () => {
+  describe('when invoked with an invalid "123456789" CEP', () => {
+    it('should reject with "validation_error"', () => {
       return cep('123456789').catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -716,7 +716,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when http request fails both for primary and secondary service with bad response', () => {
-    it('should reject with 'service_error'', () => {
+    it('should reject with "service_error"', () => {
       nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
         .replyWithError(
@@ -775,7 +775,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when http request has unformatted xml and alternatives services fails', () => {
-    it('should reject with 'service_error'', () => {
+    it('should reject with "service_error"', () => {
       nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
         .replyWithFile(
@@ -835,7 +835,7 @@ describe('[unit] cep-promise for node', () => {
   })
 
   describe('when http request fails both for primary and secondary service with error', () => {
-    it('should reject with 'service_error'', () => {
+    it('should reject with "service_error"', () => {
       nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
         .replyWithError(

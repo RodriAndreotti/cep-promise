@@ -19,7 +19,7 @@ describe('when invoked with providers parameter', () => {
   })
 
   describe('and the providers param is a string', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep('05010000', { providers: 'viacep' }).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -39,7 +39,7 @@ describe('when invoked with providers parameter', () => {
   })
 
   describe('and the providers param is a integer', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep('05010000', { providers: 123 }).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -59,7 +59,7 @@ describe('when invoked with providers parameter', () => {
   })
 
   describe('and the providers param is a object', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep('05010000', { providers: {} }).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -79,7 +79,7 @@ describe('when invoked with providers parameter', () => {
   })
 
   describe('and the providers param is a function', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep('05010000', { providers: () => () => {} }).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -99,7 +99,7 @@ describe('when invoked with providers parameter', () => {
   })
 
   describe('and the providers param is a invalid array', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       const availableProviders = Object.keys(getAvailableServices())
 
       return cep('05010000', { providers: [123, 'viacep'] }).catch((error) => {
@@ -121,7 +121,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['viacep']', () => {
+  describe('and the providers param is ["viacep"]', () => {
     it('should call only viacep service', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -176,7 +176,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['postmon']', () => {
+  describe('and the providers param is ["postmon"]', () => {
     it('should call only postmon service', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -231,7 +231,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['widenet']', () => {
+  describe('and the providers param is ["widenet"]', () => {
     it('should call only widenet service', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -286,7 +286,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['correios']', () => {
+  describe('and the providers param is ["correios"]', () => {
     it('should call only correios service', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -341,7 +341,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['correios-alt']', () => {
+  describe('and the providers param is ["correios-alt"]', () => {
     it('should call only correios alt service', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -398,7 +398,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['brasilapi']', () => {
+  describe('and the providers param is ["brasilapi"]', () => {
     it('should call only brasilapi service', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')
@@ -462,7 +462,7 @@ describe('when invoked with providers parameter', () => {
     })
   })
 
-  describe('and the providers param is ['correios, viacep']', () => {
+  describe('and the providers param is ["correios, viacep"]', () => {
     it('should call only correios and viacep services', () => {
       const correiosMock = nock('https://apps.correios.com.br')
         .post('/SigepMasterJPA/AtendeClienteService/AtendeCliente')

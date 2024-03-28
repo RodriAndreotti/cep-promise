@@ -18,7 +18,7 @@ describe('[e2e] cep-promise', () => {
     nock.enableNetConnect()
   })
 
-  describe('when invoked with a valid '05010000' string', () => {
+  describe('when invoked with a valid "05010000" string', () => {
     it('should fulfill with correct address', () =>
       cep('05010000').then((address) => {
         expect(address).to.deep.equal({
@@ -47,8 +47,8 @@ describe('[e2e] cep-promise', () => {
     })
   })
 
-  describe('when invoked with an inexistent '99999999' CEP', () => {
-    it('should reject with 'service_error'', () => {
+  describe('when invoked with an inexistent "99999999" CEP', () => {
+    it('should reject with "service_error"', () => {
       return cep('99999999').catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -87,8 +87,8 @@ describe('[e2e] cep-promise', () => {
     })
   })
 
-  describe('when invoked with an invalid '123456789' CEP', () => {
-    it('should reject with 'validation_error'', () => {
+  describe('when invoked with an invalid "123456789" CEP', () => {
+    it('should reject with "validation_error"', () => {
       return cep('123456789').catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)

@@ -18,7 +18,7 @@ describe('when invoked with timeout parameter', () => {
   })
 
   describe('and the providers exceed the timeout', () => {
-    it('should reject with 'service_error'', () => {
+    it('should reject with "service_error"', () => {
       nock('https://brasilapi.com.br/')
         .get('/api/cep/v1/05010000')
         .delay(3)

@@ -57,7 +57,7 @@ describe('[unit] cep-promise for browser', () => {
   })
 
   describe('when invoked without arguments', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep().catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -78,7 +78,7 @@ describe('[unit] cep-promise for browser', () => {
   })
 
   describe('when invoked with an Array', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep([1, 2, 3]).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -99,7 +99,7 @@ describe('[unit] cep-promise for browser', () => {
   })
 
   describe('when invoked with an Object', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep({ nintendo: true, ps: false, xbox: false }).catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -120,7 +120,7 @@ describe('[unit] cep-promise for browser', () => {
   })
 
   describe('when invoked with an Function', () => {
-    it('should reject with 'validation_error'', () => {
+    it('should reject with "validation_error"', () => {
       return cep(function zelda() {
         return 'link'
       }).catch((error) => {
@@ -142,7 +142,7 @@ describe('[unit] cep-promise for browser', () => {
     })
   })
 
-  describe('when invoked with a valid '05010000' String', () => {
+  describe('when invoked with a valid "05010000" String', () => {
     it('should fulfill with correct address', () => {
       nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
@@ -322,8 +322,8 @@ describe('[unit] cep-promise for browser', () => {
     })
   })
 
-  describe('when invoked with an inexistent '99999999' CEP', () => {
-    it('should reject with 'service_error'', () => {
+  describe('when invoked with an inexistent "99999999" CEP', () => {
+    it('should reject with "service_error"', () => {
       nock('https://viacep.com.br')
         .get('/ws/99999999/json/')
         .replyWithFile(
@@ -377,8 +377,8 @@ describe('[unit] cep-promise for browser', () => {
     })
   })
 
-  describe('when invoked with an invalid '123456789' CEP', () => {
-    it('should reject with 'validation_error'', () => {
+  describe('when invoked with an invalid "123456789" CEP', () => {
+    it('should reject with "validation_error"', () => {
       return cep('123456789').catch((error) => {
         return expect(error)
           .to.be.an.instanceOf(CepPromiseError)
@@ -398,7 +398,7 @@ describe('[unit] cep-promise for browser', () => {
   })
 
   describe('when http request fails both for all services with bad response', () => {
-    it('should reject with 'service_error'', () => {
+    it('should reject with "service_error"', () => {
       nock('https://viacep.com.br')
         .get('/ws/05010000/json/')
         .reply(400, '<h2>Bad Request (400)</h2>')
