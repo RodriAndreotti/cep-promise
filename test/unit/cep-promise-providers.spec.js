@@ -110,9 +110,9 @@ describe('when invoked with providers parameter', () => {
             type: 'validation_error',
             errors: [
               {
-                message: `O provider '123' é inválido. Os providers disponíveis são: ['${availableProviders.join(
-                  '', ''
-                )}'].`,
+                message: `O provider "123" é inválido. Os providers disponíveis são: ["${availableProviders.join(
+                  '", "'
+                )}"].`,
                 service: 'providers_validation',
               },
             ],
